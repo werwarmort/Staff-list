@@ -1,10 +1,13 @@
 import { ReactElement, useState } from 'react';
-import { Table, Image } from 'antd';
+import { Table } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import employees from '../../../App/api/employees.json';
 import EmployeeSearch from '@/features/EmployeeSearch/ui';
+import { columns } from '@/pages/EmployeeCard/config/columnsConfig.tsx';
 
 const EmployeesTable = (): ReactElement => {
   const [searchText, setSearchText] = useState<string>('');
+  const navigate = useNavigate();
 
   // преобразуем данные для отображения
   const transformedEmployees = employees.map(employee => ({
@@ -20,48 +23,6 @@ const EmployeesTable = (): ReactElement => {
     return fullName.includes(searchText.toLowerCase());
   });
 
-  // конфиг таблицы todo: вынести
-  const columns = [
-    {
-      title: 'Фото',
-      dataIndex: 'photo',
-      key: 'photo',
-      render: (photo: string) => (
-        <Image width={50} src={photo} alt="фото работника" />
-      ),
-    },
-    {
-      title: 'Фамилия',
-      dataIndex: 'lastName',
-      key: 'lastName',
-    },
-    {
-      title: 'Имя',
-      dataIndex: 'firstName',
-      key: 'firstName',
-    },
-    {
-      title: 'Отчество',
-      dataIndex: 'middleName',
-      key: 'middleName',
-    },
-    {
-      title: 'Департамент',
-      dataIndex: 'department',
-      key: 'department',
-    },
-    {
-      title: 'Должность',
-      dataIndex: 'post',
-      key: 'post',
-    },
-    {
-      title: 'Дата рождения',
-      dataIndex: 'birthDate',
-      key: 'birthDate',
-    },
-  ];
-
   // обработчик изменения текста поиска
   const handleSearch = (value: string) => {
     setSearchText(value);
@@ -76,6 +37,11 @@ const EmployeesTable = (): ReactElement => {
         columns={columns}
         rowKey="id"
         pagination={{ pageSize: 5 }}
+        onRow={record => ({
+          onClick: () => {
+            navigate(`/employee/${record.id}`);
+          },
+        })}
       />
     </div>
   );

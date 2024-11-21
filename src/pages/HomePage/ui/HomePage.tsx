@@ -1,12 +1,5 @@
 import { ReactElement } from 'react';
 import EmployeesTable from '@/widgets/EmployeesTable';
 
-const HomePage = (): ReactElement => {
-  return (
-    <div>
-      <EmployeesTable />
-    </div>
-  );
-};
-
+const HomePage = (): ReactElement => <EmployeesTable />;
 export default HomePage;

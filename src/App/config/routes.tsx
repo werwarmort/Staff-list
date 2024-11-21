@@ -1,6 +1,7 @@
 import { RouteObject } from 'react-router';
 import Layout from '../ui/Layout/Layout.tsx';
 import HomePage from '@/pages/HomePage';
+import EmployeeCard from '@/pages/EmployeeCard';
 
 const routes: RouteObject[] = [
   {
@@ -12,8 +13,8 @@ const routes: RouteObject[] = [
         element: <HomePage />,
       },
       {
-        path: '/employee',
-        element: <div>EmployeePage</div>,
+        path: '/employee/:id',
+        element: <EmployeeCard />,
       },
     ],
   },

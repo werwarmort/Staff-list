@@ -8,10 +8,8 @@ const Layout = (): React.ReactElement => {
   return (
     <main id="main" className={clsx(styles.root, {})}>
       <section className={styles.inner}>
-        <header>header</header>
         <Outlet />
       </section>
-      <section className={styles.footerWrapper}>footer</section>
     </main>
   );
 };
