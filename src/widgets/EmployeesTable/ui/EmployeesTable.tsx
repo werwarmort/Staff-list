@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import employees from '../../../App/api/employees.json';
 import EmployeeSearch from '@/features/EmployeeSearch/ui';
 import { columns } from '@/pages/EmployeeCard/config/columnsConfig.tsx';
+import defaultPhoto from '@/shared/assets/userEmployee.svg';
 
 const EmployeesTable = (): ReactElement => {
   const [searchText, setSearchText] = useState<string>('');
@@ -13,7 +14,7 @@ const EmployeesTable = (): ReactElement => {
   const transformedEmployees = employees.map(employee => ({
     ...employee,
     birthDate: new Date(employee.birthDate).toLocaleDateString(),
-    photo: employee.photo || 'default-photo-url.jpg', // todo: добавить заглушку
+    photo: employee.photo || defaultPhoto,
   }));
 
   // фильтр сотрудников
