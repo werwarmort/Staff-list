@@ -1,5 +1,6 @@
 import { RouteObject } from 'react-router';
 import Layout from '../ui/Layout/Layout.tsx';
+import HomePage from '@/pages/HomePage';
 
 const routes: RouteObject[] = [
   {
@@ -8,7 +9,7 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '/',
-        element: <div>HomePage</div>,
+        element: <HomePage />,
       },
       {
         path: '/employee',
