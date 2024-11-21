@@ -1,0 +1,28 @@
+
+
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  gap: 100px;
+}
+
+.profileBg {
+  background-color: #F4F6F9;
+}
+
+.rootBg {
+  height: 100vh;
+  background: linear-gradient(#F4F6F9, rgba(244, 246, 249, 0));
+}
+
+.footerWrapper {
+  flex: 0 0 auto;
+}
+
+.inner {
+  flex: 1 0 auto;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 25px 60px 0 60px;
+}

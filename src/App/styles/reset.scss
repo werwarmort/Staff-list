@@ -1,0 +1,116 @@
+/* Reset CSS */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+/* Reset for lists */
+ol, ul {
+    list-style: none;
+}
+
+/* Reset for quotes */
+blockquote, q {
+    quotes: none;
+}
+
+blockquote::before, blockquote::after,
+q::before, q::after {
+    content: '';
+    content: none;
+}
+
+/* Reset table styles */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Set box sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Remove default padding from body */
+body {
+    line-height: 1.5;
+    font-family: sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Anchor tags reset */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Button reset */
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Input reset */
+input, textarea {
+    font: inherit;
+    color: inherit;
+}
+
+/* Image reset */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Default focus styles for accessibility */
+:focus {
+    outline: 2px solid #005fcc;
+    outline-offset: 2px;
+}
+
+/* Hidden content helper */
+.hidden {
+    display: none !important;
+}
+
+/* Scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Root defaults */
+:root {
+    --primary-font: sans-serif;
+    --base-line-height: 1.5;
+}
+
+body {
+    font-family: var(--primary-font);
+    line-height: var(--base-line-height);
+}
