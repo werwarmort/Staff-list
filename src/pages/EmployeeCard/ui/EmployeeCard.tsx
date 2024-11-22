@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Button, Descriptions, Avatar, Spin } from 'antd';
 import employees from '../../../App/api/employees.json';
 import IEmployee from '@/pages/EmployeeCard/interfaces/IEmployee.ts';
+import styles from './EmployeeCard.module.scss';
+import descriptionFields from '@/pages/EmployeeCard/config/descriptionFields.ts';
 
 const EmployeeCard = (): ReactElement => {
   const { id } = useParams();
@@ -20,7 +22,7 @@ const EmployeeCard = (): ReactElement => {
 
   if (loading) {
     return (
-      <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <div className={styles.spinContainer}>
         <Spin size="large" />
       </div>
     );
@@ -31,10 +33,10 @@ const EmployeeCard = (): ReactElement => {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div className={styles.container}>
       <Button
         type="primary"
-        style={{ marginBottom: '20px' }}
+        className={styles.backButton}
         onClick={() => navigate(-1)}
       >
         Назад
@@ -48,27 +50,18 @@ const EmployeeCard = (): ReactElement => {
             alt="employee-photo"
           />
         }
-        style={{ maxWidth: '800px', margin: '0 auto' }}
+        className={styles.card}
       >
         <Descriptions bordered column={1}>
-          <Descriptions.Item label="Фамилия">
-            {employee.lastName}
-          </Descriptions.Item>
-          <Descriptions.Item label="Имя">
-            {employee.firstName}
-          </Descriptions.Item>
-          <Descriptions.Item label="Отчество">
-            {employee.middleName}
-          </Descriptions.Item>
-          <Descriptions.Item label="Департамент">
-            {employee.department}
-          </Descriptions.Item>
-          <Descriptions.Item label="Должность">
-            {employee.post}
-          </Descriptions.Item>
-          <Descriptions.Item label="Дата рождения">
-            {new Date(employee.birthDate).toLocaleDateString()}
-          </Descriptions.Item>
+          {descriptionFields.map(({ label, key, isDate }) => (
+            <Descriptions.Item label={label} key={key}>
+              {isDate
+                ? new Date(
+                    employee[key as keyof IEmployee],
+                  ).toLocaleDateString()
+                : employee[key as keyof IEmployee]}
+            </Descriptions.Item>
+          ))}
         </Descriptions>
       </Card>
     </div>
