@@ -10,13 +10,30 @@ import fetchEmployees from '@/pages/HomePage/services/fetchEmployees.ts';
 
 const EmployeesTable = (): ReactElement => {
   const [searchText, setSearchText] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(5);
+
   const navigate = useNavigate();
 
-  const { data, error, isLoading } = useQuery('employees', fetchEmployees);
+  const { data, error, isLoading } = useQuery(
+    ['employees', currentPage, pageSize], // зависимости запроса
+    () => fetchEmployees(currentPage, pageSize),
+    {
+      keepPreviousData: true, // сохраняем старые данные при смене страницы
+    },
+  );
+
+  if (isLoading) {
+    return <Spin />;
+  }
+
+  if (error instanceof Error) {
+    return <Alert message="Ошибка" description={error.message} type="error" />;
+  }
 
   // преобразуем данные для отображения
   const transformedEmployees =
-    data?.map((employee: IEmployee) => ({
+    data?.employees.map((employee: IEmployee) => ({
       ...employee,
       birthDate: new Date(employee.birthDate).toLocaleDateString(),
       photo: employee.photo || defaultPhoto,
@@ -31,18 +48,15 @@ const EmployeesTable = (): ReactElement => {
     },
   );
 
-  // обработчик изменения текста поиска
   const handleSearch = (value: string) => {
     setSearchText(value);
   };
 
-  if (isLoading) {
-    return <Spin />;
-  }
-
-  if (error instanceof Error) {
-    return <Alert message="Ошибка" description={error.message} type="error" />;
-  }
+  // обработчик изменения страницы
+  const handlePageChange = (page: number, pageSize: number) => {
+    setCurrentPage(page);
+    setPageSize(pageSize);
+  };
 
   return (
     <div>
@@ -52,7 +66,12 @@ const EmployeesTable = (): ReactElement => {
         dataSource={filteredEmployees}
         columns={columns}
         rowKey="id"
-        pagination={{ pageSize: 5 }}
+        pagination={{
+          current: currentPage, // текущая страница
+          pageSize: pageSize, // размер страницы
+          total: data?.totalEmployees, // общее количество сотрудников
+          onChange: handlePageChange, // обработчик изменения страницы
+        }}
         onRow={record => ({
           onClick: () => {
             navigate(`/employee/${record.id}`);
