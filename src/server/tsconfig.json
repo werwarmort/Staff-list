@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "CommonJS", // необходимо для работы с ts-node
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "outDir": "./dist", // на всякий, если буду билдить
+    "typeRoots": ["node_modules/@types"], // тут ищутся орпеделения типов
+    "types": ["node", "express"] // какие типы включать в бандл
+  },
+  "include": ["./**/*"], // учитывает все файлы в папке src/server
+  "exclude": ["node_modules"]
+}
