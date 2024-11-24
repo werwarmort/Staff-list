@@ -1,31 +1,37 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Card, Button, Descriptions, Avatar, Spin } from 'antd';
-import employees from '../../../App/api/employees.json';
-import IEmployee from '@/pages/EmployeeCard/interfaces/IEmployee.ts';
+import { Card, Button, Descriptions, Avatar, Spin, Alert } from 'antd';
+import { useQuery } from 'react-query';
+import IEmployee from '@/shared/interfaces/IEmployee.ts';
 import styles from './EmployeeCard.module.scss';
 import descriptionFields from '@/pages/EmployeeCard/config/descriptionFields.ts';
+import defaultPhoto from '@/shared/assets/userEmployee.svg';
+import fetchEmployeeById from '@/pages/EmployeeCard/services/fetchEmployeeById.ts';
 
 const EmployeeCard = (): ReactElement => {
   const { id } = useParams();
-  const [employee, setEmployee] = useState<IEmployee | null>(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const employeeData = employees.find(emp => emp.id === Number(id));
-    if (employeeData) {
-      setEmployee(employeeData);
-    }
-    setLoading(false);
-  }, [id]);
+  const {
+    data: employee,
+    error,
+    isLoading,
+  } = useQuery<IEmployee, Error>(
+    ['employee', id],
+    () => fetchEmployeeById(Number(id)),
+    { enabled: !!id },
+  );
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className={styles.spinContainer}>
         <Spin size="large" />
       </div>
     );
+  }
+
+  if (error instanceof Error) {
+    return <Alert message="Ошибка" description={error.message} type="error" />;
   }
 
   if (!employee) {
@@ -45,9 +51,10 @@ const EmployeeCard = (): ReactElement => {
         title={`Карточка сотрудника: ${employee.firstName} ${employee.lastName}`}
         extra={
           <Avatar
-            src={employee.photo || 'default-photo-url.jpg'}
+            src={employee.photo || defaultPhoto}
             size={100}
             alt="employee-photo"
+            className={styles.userPhoto}
           />
         }
         className={styles.card}

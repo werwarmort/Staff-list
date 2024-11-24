@@ -1,5 +1,5 @@
 import { ColumnType } from 'antd/es/table';
-import IEmployee from '@/pages/EmployeeCard/interfaces/IEmployee.ts';
+import IEmployee from '@/shared/interfaces/IEmployee.ts';
 
 export const columns: ColumnType<IEmployee>[] = [
   {
